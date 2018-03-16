@@ -1,0 +1,14 @@
+﻿Build started 6/13/2014 5:59:50 PM.
+     1>Project "I:\School\C++\HomeWork 2\guessingGame\guessingGame\guessingGame.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         F:\Visual Studio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>i:\school\c++\homework 2\guessinggame\guessinggame\main.cpp(11): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+       Link:
+         F:\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"I:\School\C++\HomeWork 2\guessingGame\Debug\guessingGame.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"I:\School\C++\HomeWork 2\guessingGame\Debug\guessingGame.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"I:\School\C++\HomeWork 2\guessingGame\Debug\guessingGame.lib" /MACHINE:X86 Debug\main.obj
+         guessingGame.vcxproj -> I:\School\C++\HomeWork 2\guessingGame\Debug\guessingGame.exe
+     1>Done Building Project "I:\School\C++\HomeWork 2\guessingGame\guessingGame\guessingGame.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.63
