@@ -1,7 +1,3 @@
-#
-#This script creates a humanoid skeleton with proper heirarchy, controls, and control groups for use in rigging.
-# [[CURRENTLY INCOMPLETE]]
-
 import maya.cmds as cmd
 
 #this is useful later (Defines our control colors
@@ -28,19 +24,19 @@ def createJointWithControl(joint, parent, x, y, z) :
     #NOTES FOR THIS FUNCTION: WHEN PLACING THE JOINT, TRANSLATE THE CONTROL GROUP, *NOT* THE JOINT OR CONTROL
 	
 	#Create thumb base joint
-	j = cmd.joint(n= joint + '_JNT')
+	rht1 = cmd.joint(n= joint + '_JNT')
 	#translate the joint to the proper position (translation values subject to change
-	assignPos(j, x, y, z)
+	assignPos(rht1, x, y, z)
 	
 	#create control and set control group position
-	jControl = cmd.circle(n= joint + '_CNTRL')
-	jControlGroup = cmd.group(n= joint + 'Cntrl_GRP')
+	rht1c = cmd.circle(n= joint + '_CNTRL')
+	rht1cg = cmd.group(n= joint + 'Cntrl_GRP')
 	
-	assignPos(jControlGroup, x, y, z)
+	assignPos(rht1cg, x, y, z)
 	
-	cmd.parentConstraint(jControl, j, mo=True, n= joint + '_Constraint')
+	cmd.parentConstraint(rht1c, rht1, mo=True, n= joint + '_Constraint')
 	
-	bluecon(jControl[0])
+	bluecon(rht1c[0])
 	cmd.select(d=True)
 	#parent this joint
 	cmd.parent( joint + '_JNT', parent + '_JNT') #currently this isn't giving the behavior we want. ASK ALEX ON MONDAY
@@ -63,21 +59,21 @@ class JointData :
 jointList = []
 
 #spine, starting at the root
-jointList.append(JointData('spine', 'root', -5, -5, 5))
-jointList.append(JointData('chest', 'spine', -5, -5, 5))
-jointList.append(JointData('neck_base', 'chest', -5, -5, 5))
-jointList.append(JointData('skull_base', 'neck_base', -5, -5, 5))
-jointList.append(JointData('skull_top', 'skull_base', -5, -5, 5))
+jointList.append(JointData('spine', 'root', 0, 3, -2))
+jointList.append(JointData('chest', 'spine', 0, 7, 1))
+jointList.append(JointData('neck_base', 'chest', 0, 16, -3))
+jointList.append(JointData('skull_base', 'neck_base', 0, 22, -2))
+jointList.append(JointData('skull_top', 'skull_base', 0, 28, -3))
 
 
 #Arm and shoulder, starting from neck_base
-jointList.append(JointData('r_shoulder', 'neck_base', -5, -5, 5))
-jointList.append(JointData('r_elbow', 'r_shoulder', -5, -5, 5))
-jointList.append(JointData('r_wrist', 'r_elbow', -5, -5, 5))
+jointList.append(JointData('r_shoulder', 'neck_base', -5, 18, -1))
+jointList.append(JointData('r_elbow', 'r_shoulder', -12, 16, -2))
+jointList.append(JointData('r_wrist', 'r_elbow', -18, 16, 0))
 
 #note: I *could* just create the hand with the same values from the midterm, 
 # then translate the wrist a set amount to make room for the arm and torso before mirroring...
-#Hand
+#Hand NEED ALEX'S HELP WITH THIS
 jointList.append(JointData('r_thumb1', 'r_wrist', -5, -5, 5))
 jointList.append(JointData('r_thumb2', 'r_thumb1', -8, -7, 8))
 jointList.append(JointData('r_thumb3', 'r_thumb2', -9, -8, 9))
@@ -105,10 +101,10 @@ jointList.append(JointData('r_ring_tip', 'r_ring3', -5, -5, 5))
 
 
 #Leg and Hip
-jointList.append(JointData('r_hip', 'spine', -5, -5, 5))
-jointList.append(JointData('r_knee', 'r_hip', -5, -5, 5))
-jointList.append(JointData('r_ankle', 'r_knee', -5, -5, 5))
-jointList.append(JointData('r_toe', 'r_ankle', -5, -5, 5))
+jointList.append(JointData('r_hip', 'spine', -4, 2.5, -2))
+jointList.append(JointData('r_knee', 'r_hip', -4, -10, 0.5))
+jointList.append(JointData('r_ankle', 'r_knee', -4, -20, -1))
+jointList.append(JointData('r_toe', 'r_ankle', -4, -20.0, 1))
 
 
 # ACTUALLY BUILD THE SKELETON
@@ -120,15 +116,13 @@ jointList.append(JointData('r_toe', 'r_ankle', -5, -5, 5))
 #Variables named by abbreviation. Rhw = Right Hand Wrist, Rht = right hand thumb, etc
 
 #The root joint has to be created first, and needs to be done outside the function because it has no parent.
-
 #Create Root joint
 r = cmd.joint(n='root_JNT')
-
 #Create Root Control
 rControl = cmd.circle(n='root_CNTRL')
 rControlGroup = cmd.group(n='root_GRP')
 cmd.parentConstraint(rControl, r, mo=True, n='myConstraint') #make sure this constrains the correct object
-
+#cmd.setAttr(Rhwcg+'.tx',5) #translate control group 5 along the X-axis (this also moves the joint) (This is commented out for the wrist, because I want to START at 0,0. This will be different in the final full-rig version.)
 bluecon(rControl[0]) #color the controller using the definitions set above
 cmd.select(d=True)
 
